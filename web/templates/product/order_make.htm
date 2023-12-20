@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Make an order{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="sku">SKU</label>
+    <input name="sku" id="sku" type="text" value="{{ sku }}" disabled>
+    <label for="cust_no">Customer number</label>
+    <input name="cust_no" id="cust_no" type="number" value="{{ request.form['cust_no'] }}" required>
+    <label for="date">Date</label>
+    <input name="date" id="date" type="date" required>
+    <label for="qty">Quantity</label>
+    <input name="qty" id="qty" type="number" min="1" step="1" placeholder="1" value="{{ request.form['qty'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+{% endblock %}

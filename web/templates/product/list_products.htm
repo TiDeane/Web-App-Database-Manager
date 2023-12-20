@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Products{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for prod in products %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>Product: {{ prod['name'] }}</h1>
+          <div class="about">Code {{ prod['sku'] }}</div>
+        </div>
+        <a class="action" href="{{ url_for('product_update', sku=prod['sku']) }}">Edit</a>
+        <a class="action" href="{{ url_for('order_make', sku=prod['sku']) }}">Order</a>
+          
+      </header>
+      <p class="body">€ {{ prod['price'] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

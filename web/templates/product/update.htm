@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Product {{ product['name'] }} | Edit{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="sku">SKU</label>
+    <input name="sku" id="sku" type="text" value="{{ product['sku'] }}" disabled>
+    <label for="description">Description</label>
+    <input name="description" id="description" type="text" value="{{ request.form['description'] or product['description'] }}" required>
+    <label for="price">Price</label>
+    <input name="price" id="price" type="number" min="0" step="0.01" placeholder="0.00" value="{{ request.form['price'] or product['price'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('product_delete', sku=product['sku']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure? This is also going to delete the corresponding supplier and remove this product from all orders that contain it!');">
+  </form>
+{% endblock %}

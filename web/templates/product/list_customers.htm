@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Customers{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+  {% for cus in customers %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>Customer number: {{ cus['cust_no'] }}</h1>
+          <div class="about">Name: {{ cus['name'] }}</div>
+        </div>
+        <form action="{{ url_for('customer_delete', cust_no=cus['cust_no']) }}" method="post">
+          <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure? This is also going to remove all orders placed and/or paid by this customer, along with the information about what employee processed said orders and what the orders contained.');">
+        </form>
+      </header>
+      <p class="body">Email: {{ cus['email'] }}</p>
+      <p class="body">Phone: {{ cus['phone'] }}</p>
+      <p class="body">Address: {{ cus['address'] }}</p>
+      <a class="action" href="{{ url_for('order_cus_list', cust_no=cus['cust_no']) }}">List orders</a>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
